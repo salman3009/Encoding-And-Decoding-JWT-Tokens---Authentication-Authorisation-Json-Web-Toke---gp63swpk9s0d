@@ -29,6 +29,8 @@ status: 'Success'
 const encodePayload = async (req, res) => {
     try {
         //Write your code here
+        const token = jwt.sign(req.body,JWT_SECRET);
+        res.status(200).json({token,status:'Success'});
     } catch (err) {
         console.error(err);
         res.status(500).json({
@@ -70,6 +72,9 @@ Output:
 const decodeToken = (req, res) => {
     try {
        //Write your code here
+       let {token } = req.body;
+       const decodedToken = jwt.verify(token,JWT_SECRET);
+       res.status(200).json({payload:decodedToken,status:'Success'});
     } catch (err) {
         console.error(err);
         res.status(401).json({ message: 'Invalid token' });
